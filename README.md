@@ -29,3 +29,22 @@ representation.
 reflects the combined logic.
 3. Implemented sample JSON data and test evaluate_rule for different scenarios.
 4. Explore combining additional rules and test the functionality.
+
+Clone the repository:
+'''function test(){
+console.log("git clone https://github.com/nikeshsharma192002/Rule-Engine-with-AST.git
+cd rule-engine")}'''
+
+Set up a virtual environment (optional but recommended):
+
+python3 -m venv venv
+source venv/bin/activate (Linux/macOS)
+.\venv\Scripts\activate (Windows)
+
+Install dependencies:
+pip install -r requirements.txt
+
+Run the main application:
+python main.py
+To run the test cases:
+python -m unittest test_cases.py
