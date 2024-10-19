@@ -31,9 +31,10 @@ reflects the combined logic.
 4. Explore combining additional rules and test the functionality.
 
 Clone the repository:
-'''function test(){
-console.log("git clone https://github.com/nikeshsharma192002/Rule-Engine-with-AST.git
-cd rule-engine")}'''
+
+git clone https://github.com/Thiru9160/Rule-Engine-with-AST.git
+
+cd rule-engine
 
 Set up a virtual environment (optional but recommended):
 
