@@ -43,9 +43,13 @@ source venv/bin/activate (Linux/macOS)
 .\venv\Scripts\activate (Windows)
 
 Install dependencies:
+
 pip install -r requirements.txt
 
 Run the main application:
+
 python main.py
+
 To run the test cases:
+
 python -m unittest test_cases.py
