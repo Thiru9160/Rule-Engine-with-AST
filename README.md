@@ -1,5 +1,6 @@
 # Rule-Engine-with-AST
  A simple 3-tier rule engine application(Simple UI, API and Backend, Data) to determine user eligibility based on attributes like age, department, income, spend etc.The system can use Abstract Syntax Tree (AST) to represent conditional rules and allow for dynamic creation,combination, and modification of these rules.
+
 API Design:
 1. create_rule(rule_string): This function takes a string representing a rule (as
 shown in the examples) and returns a Node object representing the corresponding AST.
@@ -13,7 +14,9 @@ rule's AST and a dictionary data containing attributes (e.g., data = {"age": 35,
 function should evaluate the rule against the provided data and return True if the user is
 of that cohort based on the rule, False otherwise
 
+
 Sample Rules:
+
 ● rule1 = "((age > 30 AND department = 'Sales') OR (age < 25 AND
 department = 'Marketing')) AND (salary > 50000 OR experience >
 5)"
@@ -21,6 +24,7 @@ department = 'Marketing')) AND (salary > 50000 OR experience >
 20000 OR experience > 5)"
 
 Test Cases:
+
 1. Create individual rules from the examples using create_rule and verify their AST
 representation.
 2. Combine the example rules using combine_rules and ensure the resulting AST
