@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rule Engine Frontend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        input, select {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .rule-list {
+            margin-top: 20px;
+        }
+        .rule-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .rule-list li {
+            padding: 10px;
+            background-color: #f1f1f1;
+            margin-bottom: 10px;
+            border-left: 5px solid #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rule Engine</h1>
+
+        <!-- Admin Interface -->
+        <div id="admin-section">
+            <h2>Admin: Create Rule</h2>
+            <form id="create-rule-form">
+                <textarea id="rule-text" placeholder="Enter rule here (e.g., age > 30 AND department == 'Sales')"></textarea>
+                <button type="button" onclick="createRule()">Create Rule</button>
+            </form>
+
+            <div class="rule-list">
+                <h2>Existing Rules</h2>
+                <ul id="rule-list"></ul>
+            </div>
+        </div>
+
+        <!-- User Interface -->
+        <div id="user-section">
+            <h2>User: Check Eligibility</h2>
+            <form id="eligibility-form">
+                <input type="number" id="age" placeholder="Age" />
+                <input type="text" id="department" placeholder="Department" />
+                <input type="number" id="salary" placeholder="Salary" />
+                <input type="number" id="experience" placeholder="Experience (in years)" />
+                <button type="button" onclick="checkEligibility()">Check Eligibility</button>
+            </form>
+            <div id="eligibility-result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Base API URL
+        const API_URL = 'http://localhost:5000';  // Adjust this to your backend API
+
+        // Function to create a rule
+        async function createRule() {
+            const ruleText = document.getElementById('rule-text').value;
+            
+            const response = await fetch(`${API_URL}/create_rule`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ rule: ruleText })
+            });
+            
+            if (response.ok) {
+                alert('Rule created successfully!');
+                loadRules();
+            } else {
+                alert('Failed to create rule');
+            }
+        }
+
+        // Function to load rules (display existing rules)
+        async function loadRules() {
+            const response = await fetch(`${API_URL}/rules`);
+            const data = await response.json();
+            
+            const ruleList = document.getElementById('rule-list');
+            ruleList.innerHTML = '';
+            data.rules.forEach(rule => {
+                const li = document.createElement('li');
+                li.textContent = rule.rule_text;
+                ruleList.appendChild(li);
+            });
+        }
+
+        // Function to check eligibility
+        async function checkEligibility() {
+            const age = document.getElementById('age').value;
+            const department = document.getElementById('department').value;
+            const salary = document.getElementById('salary').value;
+            const experience = document.getElementById('experience').value;
+            
+            const userData = {
+                age: parseInt(age),
+                department: department,
+                salary: parseFloat(salary),
+                experience: parseInt(experience)
+            };
+            
+            const response = await fetch(`${API_URL}/check_eligibility`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userData)
+            });
+            
+            const result = await response.json();
+            document.getElementById('eligibility-result').innerText = result.eligible ? 'You are eligible!' : 'You are not eligible.';
+        }
+
+        // Load existing rules when the page loads
+        window.onload = loadRules;
+    </script>
+</body>
+</html>
